@@ -1,0 +1,62 @@
+package UploadImage; 
+
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class UploadImageFile {
+	public static void main(String[] args) throws Exception{
+		try {
+			System.setProperty("webdriver.chrome.driver", "D:\\vivek\\chromedriver_win32\\chromedriver.exe");
+			ChromeDriver driver=new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.get("https://demo.bigtreecms.org/admin/login/");
+			Thread.sleep(2000);
+			Assert.assertEquals("//input[@id='user']", "//input[@id='user']");
+			driver.findElement(By.xpath("//input[@id='user']")).sendKeys("demo@bigtreecms.org");
+			Thread.sleep(2000);
+			driver.findElement(By.id("password")).sendKeys("demo");
+			driver.findElement(By.xpath("//input[@type='submit']")).click();
+			Thread.sleep(2000);
+			Assert.assertEquals("//h1/a[text()='Dashboard']", "//h1/a[text()='Dashboard']");
+			driver.findElement(By.xpath("//ul/li/a[contains(text(),'Files')]")).click();
+			driver.findElement(By.xpath("//a[contains(text(),'Add Image')]")).click();
+			driver.findElement(By.xpath("//form[@id='file_manager_dropzone']")).click();
+			
+			StringSelection selection = new StringSelection("C:\\Users\\Vivek\\Desktop\\Vivek\\images.jpg");
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
+			Thread.sleep(5000);
+			Robot robot=new Robot();
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_V);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
+			robot.keyRelease(KeyEvent.VK_V);
+			Thread.sleep(5000);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			Thread.sleep(5000);
+			driver.findElement(By.xpath("//*[@value='Continue']")).click();
+			
+			driver.findElement(By.xpath("//*[@value='Crop Image']")).click();
+			driver.findElement(By.xpath("//*[@value='Crop Image']")).click();
+			driver.findElement(By.xpath("//*[@value='Crop Image']")).click();
+			driver.findElement(By.xpath("//*[@value='Crop Image']")).click();
+			driver.findElement(By.xpath("//*[@value='Crop Image']")).click();
+			driver.findElement(By.xpath("//*[@value='Crop Image']")).click();
+			driver.findElement(By.xpath("//*[@value='Crop Image']")).click();
+			Thread.sleep(5000);
+			driver.findElement(By.xpath("//*[@value='Update File']")).click();
+			Thread.sleep(2000);
+			Assert.assertEquals("//h3[text()='File Manager']", "//h3[text()='File Manager']");
+			Assert.assertEquals("//p[text()='Updated File']", "//p[text()='Updated File']");
+			driver.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}
